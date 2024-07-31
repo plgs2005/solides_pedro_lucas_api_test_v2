@@ -1,0 +1,386 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Teste Prático Backend v2",
+        "description": "\n<div style='display: flex; justify-content: space-between;'>\n  <div style='flex: 1; padding-right: 10px;'>\n    <h3>Últimos Projetos:</h3>\n    <ul>\n      <li><strong>Projeto 1</strong>: Plataforma SaaS para agendamento de postagens em mídias sociais, utilizando Laravel, Docker e microserviços. O projeto incluiu integração com a API do TikTok e automação de tarefas.</li>\n      <li><strong>Projeto 2</strong>: Assistente jurídico baseado em IA, capaz de analisar PDFs de processos judiciais e fornecer resumos e insights. Utilizou tecnologias como OpenAI GPT e integrações com bancos de dados jurídicos.</li>\n      <li><strong>Projeto 3</strong>: Sistema de gerenciamento de vendas e assinaturas para produtores digitais, implementado com Laravel, Vue.js e API RESTful. Focado em alta performance e escalabilidade.</li>\n    </ul>\n  </div>\n  <div style='flex: 1; padding-right: 10px;'>\n    <h3>Desafios do Teste:</h3>\n    <p>O teste foi relativamente simples, mas envolveu a implementação de práticas recomendadas de mercado para autenticação e documentação de APIs. A configuração do JWT, a criação de endpoints seguros e a documentação detalhada com Swagger foram os principais focos.</p>\n  </div>\n  <div style='flex: 1;'>\n    <h3>Contato:</h3>\n    <ul>\n      <li><strong>Nome</strong>: Pedro Lucas Gandara Santos</li>\n      <li><strong>Email</strong>: <a href='mailto:plgsantos@icloud.com'>plgsantos@icloud.com</a>, <a href='mailto:devlaravel@icloud.com'>devlaravel@icloud.com</a></li>\n      <li><strong>Telefone</strong>: +55 11 95090-3204</li>\n      <li><strong>GitHub</strong>: <a href='https://github.com/seu-usuario'>https://github.com/seu-usuario</a></li>\n    </ul>\n  </div>\n</div>\n",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Este é o servidor principal onde a API está hospedada. Utilize este endpoint para fazer chamadas às diversas rotas documentadas abaixo."
+        }
+    ],
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Registrar um novo usuário",
+                "operationId": "8a56853624e025573120a09a4c75d468",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário registrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Dados inválidos"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Fazer login de um usuário",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário logado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Fazer logout de um usuário",
+                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "responses": {
+                    "200": {
+                        "description": "Usuário desconectado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Obter detalhes do usuário autenticado",
+                "operationId": "9d9bc556f927575aa492a88c28fe5908",
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do usuário recuperados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/records": {
+            "get": {
+                "tags": [
+                    "Records"
+                ],
+                "summary": "Obter lista de registros",
+                "operationId": "6ce2599babf89ecf9ec9ba7d674b5f4b",
+                "responses": {
+                    "200": {
+                        "description": "Operação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Record"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Records"
+                ],
+                "summary": "Criar um novo registro",
+                "operationId": "b1cb58080b97f1cc484352515a66d98b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registro criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Record"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/records/{id}": {
+            "get": {
+                "tags": [
+                    "Records"
+                ],
+                "summary": "Obter um registro específico",
+                "operationId": "cde9394dcb427e9767a141c40aacbc2b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Record"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Registro não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Records"
+                ],
+                "summary": "Atualizar um registro existente",
+                "operationId": "d25be35eaf15389d77b3e8936643847d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Registro atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Record"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Registro não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Records"
+                ],
+                "summary": "Excluir um registro",
+                "operationId": "2a5d78ff92c3c02e9a7627a5de6d5a08",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Registro excluído com sucesso"
+                    },
+                    "404": {
+                        "description": "Registro não encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Record": {
+                "title": "Record",
+                "properties": {
+                    "id": {
+                        "description": "ID do registro",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Nome do registro",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Descrição do registro",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Timestamp de criação",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp da última atualização",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Endpoints relacionados à autenticação"
+        },
+        {
+            "name": "Records",
+            "description": "Endpoints relacionados aos registros"
+        }
+    ]
+}

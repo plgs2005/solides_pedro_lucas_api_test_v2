@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS `testing`;
+
+GRANT ALL PRIVILEGES ON `testing`.* TO 'test_laravel' @'%';
+
+FLUSH PRIVILEGES;
