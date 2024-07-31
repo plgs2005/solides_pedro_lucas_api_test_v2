@@ -37,7 +37,7 @@ Bem-vindo à documentação da API para o projeto de teste prático Backend v2. 
 1. **Clone o Repositório:**
 
     ```sh
-    git clone https://github.com/seu-usuario/teste-pratico-backend-v2.git
+    git clone https://github.com/plgs2005/solides_pedro_lucas_api_test_v2.git
     cd teste-pratico-backend-v2
     ```
 
