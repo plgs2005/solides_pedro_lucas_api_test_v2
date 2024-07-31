@@ -206,6 +206,8 @@ A documentação Swagger pode ser acessada em: [http://localhost/api/documentati
 
 Foi criada uma coleção no Postman com todos os endpoints configurados para facilitar os testes. Você pode baixar a coleção [aqui](https://github.com/plgs2005/solides_pedro_lucas_api_test_v2/blob/main/public/postman/Pedro%20Lucas%20Teste%20Pr%C3%A1tico%20API.postman_collection.json).
 
+## ⚠️ATENÇÃO⚠️
+
 ### Como Executar os Testes no Postman:
 
 1. **Abrir a Coleção**:
