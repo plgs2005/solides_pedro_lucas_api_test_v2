@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a>
 <div class="sc-gGCDNa dMoCpX">
 <div class="sc-kCUnkP kiPSMJ">
-    <img src="asset('/img/logo_liberfly.jpeg')" class="sc-joCgVr fjphiV">
+    <img src="https://github.com/plgs2005/solides_pedro_lucas_api_test_v2/blob/main/public/img/logo_liberfly.jpeg" class="sc-joCgVr fjphiV">
 </div>
     <h1>Liberfly</h1>
 </div>
