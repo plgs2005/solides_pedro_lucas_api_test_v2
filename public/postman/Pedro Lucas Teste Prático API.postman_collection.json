@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "6a23a8f2-3cfa-4caa-8b00-c1d30586d4a3",
+		"name": "Pedro Lucas Teste Prático API",
+		"description": "# 👋 Introdução\n\nBem-vindo ao espaço de desenvolvimento de API. Este espaço serve como uma única fonte de verdade para as APIs que construímos e ajuda novos engenheiros a se integrarem mais rapidamente ao nosso cenário de APIs.\n\n# 🚀 Começando com este espaço\n\nColeções de Referência  \nEssas coleções contêm documentação detalhada das APIs da nossa equipe. Elas ajudarão você a entender as capacidades dos serviços que possuímos e como usá-los efetivamente. Como exemplo, adicionamos a coleção de Documentação da API. Ela contém solicitações e exemplos para criar, ler, atualizar e deletar coleções via API. Recomendamos adicionar coleções de referência para seus serviços neste espaço.\n\n# Coleções Modelo\n\nEssas coleções de autoatendimento, organizadas pela nossa equipe, ajudarão você a observar fluxos de trabalho suportados pelos serviços que possuímos. Você pode enviar solicitações diretamente usando esses endpoints. Como exemplo, adicionamos a coleção de Noções Básicas de API RESTful que usa a API fake-store para criar, ler, atualizar e deletar produtos. Recomendamos adicionar coleções modelo para fluxos de trabalho importantes gerenciados pela sua equipe.\n\n# Ambientes\n\nAmbientes são configurados para gerenciar variáveis como URLs base, chaves de API e tokens, cujos valores você pode alterar dependendo do contexto do seu trabalho (por exemplo, desenvolvimento, teste, produção).\n\n# 🛟 Ajuda e Suporte\n\nSe você tiver qualquer dúvida ou sugestão, por favor, não hesite em entrar em contato com seu gerente ou qualquer membro da equipe de Engenharia.\n\n**Leia o arquivo README para entender o funcionamento através da documentação gerada.**\n\n### Contato:\n\nNome: Pedro Lucas Gandara Santos  \nEmail: [plgsantos@icloud.com](https://mailto:plgsantos@icloud.com), [devlaravel@icloud.com](https://mailto:devlaravel@icloud.com)  \nTelefone: +55 11 95090-3204  \nGitHub: Pedro Lucas Fullstack Laravel\n\n## Executando os Testes\n\nPara executar todos os testes de uma só vez, você pode ir até a aba **Runs** no Postman e clicar no botão **Run Collection**. Isso permitirá que você execute todos os endpoints configurados na coleção de uma só vez.\n\nSe preferir, você também pode executar manualmente cada um dos endpoints individualmente.\n\nStartFragment\n\n### Como Executar os Testes no Postman:\n\n1. **Abrir a Coleção**:\n    \n    - No painel à esquerda, selecione a coleção desejada.\n        \n2. **Ir para a Aba \"Runs\" (Runner)**:\n    \n    - No canto superior esquerdo do Postman, clique no ícone do \"Runner\" ou vá para a aba \"Runs\".\n        \n3. **Selecionar a Coleção para Executar**:\n    \n    - No Postman Runner, selecione a coleção que você deseja executar da lista de coleções disponíveis.\n        \n4. **Configurar a Execução**:\n    \n    - Escolha o ambiente adequado, como desenvolvimento, teste ou produção.\n        \n    - Configure as variáveis necessárias, como `base_url`, `token`, etc.\n        \n5. **Executar a Coleção**:\n    \n    - Clique no botão **Run Collection**.\n        \n    - Os testes serão executados automaticamente e os resultados serão exibidos na tela.\n        \n6. **Verificar os Resultados**:\n    \n    - Após a execução, você poderá ver os resultados dos testes, incluindo status de sucesso/falha, tempo de resposta e quaisquer erros.\n        \n\nSe preferir, você pode executar manualmente cada um dos endpoints diretamente na interface principal do Postman.\n\nCom isso, você e sua equipe podem garantir que todos os endpoints estejam funcionando corretamente e verificar quaisquer problemas de forma eficiente.\n\nEndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12398704"
+	},
+	"item": [
+		{
+			"name": "Registro de Usuário",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"token\", jsonData.token);\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is within an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the required field - token\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.token).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Token is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login de Usuário",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"token\", jsonData.token);\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is within an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the required field - token\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.token).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Token is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout de Usuário",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/logout",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter Detalhes do Usuário Autenticado",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Registros",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/records",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter um Registro Específico",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/records/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar um Novo Registro",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Test Record\",\n    \"description\": \"Test Description\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/records",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar um Registro",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Updated Record\",\n    \"description\": \"Updated Description\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/records/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir um Registro",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/records/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"records",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost"
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

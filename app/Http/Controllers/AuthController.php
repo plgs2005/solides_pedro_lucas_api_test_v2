@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @OA\Tag(
@@ -33,32 +34,60 @@ class AuthController extends Controller
      *         response=201,
      *         description="Usuário registrado com sucesso",
      *         @OA\JsonContent(
+     *             @OA\Property(property="user", type="object",
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="created_at", type="string"),
+     *                 @OA\Property(property="updated_at", type="string"),
+     *                 @OA\Property(property="id", type="integer"),
+     *             ),
      *             @OA\Property(property="token", type="string")
      *         )
      *     ),
      *     @OA\Response(
      *         response=400,
      *         description="Dados inválidos"
+     *     ),
+     *     @OA\Response(
+     *         response=409,
+     *         description="Usuário já existe"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Não autorizado"
      *     )
      * )
      */
     public function register(Request $request)
     {
+        // Valida os dados de entrada
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
+        // Verifica se o usuário já existe
+        $existingUser = User::where('email', $request->email)->first();
+        if ($existingUser) {
+            return response()->json(['error' => 'User already exists'], 409);
+        }
+
+        // Cria o usuário
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        // Gera o token de autenticação
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user', 'token'), 201);
+        // Retorna a resposta com o usuário e o token
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ], 201);
     }
 
     /**
@@ -88,13 +117,22 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        // Valida os dados de entrada
+        $this->validate($request, [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
 
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
+        // Tenta autenticar o usuário e gerar um token
+        if (!$token = Auth::attempt($request->only('email', 'password'))) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return response()->json(compact('token'));
+        // Retorna a resposta com o usuário e o token
+        return response()->json([
+            'user' => Auth::user(),
+            'token' => $token
+        ]);
     }
 
     /**
