@@ -23,8 +23,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+//Gerenciamento de rotas poderia ser feito com Grupos de Rotas diferentes como versionamento V1 V2 etc..
 Route::middleware('auth:api')->group(function () {
+
+    //utilizando para funções especificas para classes construidas personalisadas.
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('me', [AuthController::class, 'me']);
+
+    //note que utilizei a apiResources neste caso para mostrar tecnicas diferentes para construção de rotas
     Route::apiResource('records', RecordController::class);
 });
